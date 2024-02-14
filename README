@@ -8,8 +8,7 @@ This project is part of my first-year student development program, where I've le
 - Utilize the media section (slider table) for creating carousels, among other possibilities.
 - Add PDF file.
 - Manage secondary administrators, with restricted rights, under the main administrator.
-
-Explore the API menu to access public endpoints for external website integration.
+- Explore the API menu to access public endpoints for external website integration.
 
 ## Installation
 
@@ -29,7 +28,9 @@ Email: test@test.com
 Password: test
 
 5. **Update server settings in the .env file.**
-If enabling CORS for external websites, add your URL to the "BASE_URL"
+Make sure to update the database connection details in the ` menuapp/back/.env` file. Provide your local MySQL database name, username, and password.
+Additionally, ensure to set JWT key.
+If enabling CORS for external websites, add your URL to the "BASE_URL".If enabling CORS for external websites, add your URL to the "BASE_URL"
 
 6. **Front-End Integration**
 An empty front directory is provided for importing the front-end as per your preferences.
