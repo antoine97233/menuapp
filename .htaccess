@@ -1,0 +1,17 @@
+# Active le moteur de réécriture d'URL
+RewriteEngine On
+
+# Le serveur doit suivre des liens symboliques
+Options +FollowSymlinks
+
+
+# Réécriture d'URL pour rendre l'index du fichier front accessible à la racine du site
+RewriteRule ^$ front/index.html [L]
+
+# Protection contre les injections d'en-têtes HTTP
+RewriteCond %{HTTP:Authorization} ^(.+)$
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Désactive l'affichage des index
+Options -Indexes
+

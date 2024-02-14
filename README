@@ -1,0 +1,34 @@
+# Restaurant App
+
+This project is part of my first-year student development program, where I've learned PHP and POO. It is a small application designed to manage and export data, serving as a back-office for a small website.
+
+## Features
+
+- Manage groups with categories and items (in order to create product pages).
+- Utilize the media section (slider table) for creating carousels, among other possibilities.
+- Add PDF file.
+- Manage secondary administrators, with restricted rights, under the main administrator.
+
+Explore the API menu to access public endpoints for external website integration.
+
+## Installation
+
+1. **Clone Repository:**
+git clone https://github.com/your-username/restaurant-app.git
+
+2. **Set Up Local Development Server.**
+
+3. **Import Database**
+Import the SQL file (appmenu.sql in the SQL directory) into your MySQL database.
+Default superAdmin credentials:
+Email: test@test.com
+Password: test
+
+4. **Update server settings in the .env file.**
+If enabling CORS for external websites, add your URL to the "BASE_URL"
+
+5. **Front-End Integration**
+An empty front directory is provided for importing the front-end as per your preferences.
+
+6. **Connect**
+Open the application in your web browser and log in.
