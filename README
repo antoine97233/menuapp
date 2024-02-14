@@ -18,17 +18,24 @@ git clone https://github.com/antoine97233/menuapp.git
 
 2. **Set Up Local Development Server.**
 
-3. **Import Database**
+3. **Install Composer Dependencies.**
+cd menuapp/back
+composer install
+
+4. **Import Database**
 Import the SQL file (appmenu.sql in the SQL directory) into your MySQL database.
 Default superAdmin credentials:
 Email: test@test.com
 Password: test
 
-4. **Update server settings in the .env file.**
+5. **Update server settings in the .env file.**
 If enabling CORS for external websites, add your URL to the "BASE_URL"
 
-5. **Front-End Integration**
+6. **Front-End Integration**
 An empty front directory is provided for importing the front-end as per your preferences.
 
-6. **Connect**
-Open the application in your web browser and log in.
+7. **Connect**
+Open the application in your web browser by navigating to the following directory:
+menuapp/back/admin
+
+
