@@ -4,7 +4,6 @@ RewriteEngine On
 # Le serveur doit suivre des liens symboliques
 Options +FollowSymlinks
 
-
 # Réécriture d'URL pour rendre l'index du fichier front accessible à la racine du site
 RewriteRule ^$ front/index.html [L]
 
@@ -15,3 +14,5 @@ RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 # Désactive l'affichage des index
 Options -Indexes
 
+# Redirection de /admin/ vers /back/admin/
+RewriteRule ^admin/(.*)$ /back/admin/$1 [L]

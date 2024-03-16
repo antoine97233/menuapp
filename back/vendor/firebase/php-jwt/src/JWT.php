@@ -102,7 +102,7 @@ class JWT
         $timestamp = \is_null(static::$timestamp) ? \time() : static::$timestamp;
 
         if (empty($keyOrKeyArray)) {
-            throw new InvalidArgumentException('Key may not be empty', 400);
+            throw new InvalidArgumentException('Key may not be empty');
         }
         $tks = \explode('.', $jwt);
         if (\count($tks) !== 3) {
@@ -153,23 +153,29 @@ class JWT
         // Check the nbf if it is defined. This is the time that the
         // token can actually be used. If it's not yet that time, abort.
         if (isset($payload->nbf) && floor($payload->nbf) > ($timestamp + static::$leeway)) {
-            throw new BeforeValidException(
+            $ex = new BeforeValidException(
                 'Cannot handle token with nbf prior to ' . \date(DateTime::ISO8601, (int) $payload->nbf)
             );
+            $ex->setPayload($payload);
+            throw $ex;
         }
 
         // Check that this token has been created before 'now'. This prevents
         // using tokens that have been created for later use (and haven't
         // correctly used the nbf claim).
         if (!isset($payload->nbf) && isset($payload->iat) && floor($payload->iat) > ($timestamp + static::$leeway)) {
-            throw new BeforeValidException(
+            $ex = new BeforeValidException(
                 'Cannot handle token with iat prior to ' . \date(DateTime::ISO8601, (int) $payload->iat)
             );
+            $ex->setPayload($payload);
+            throw $ex;
         }
 
         // Check if this token has expired.
         if (isset($payload->exp) && ($timestamp - static::$leeway) >= $payload->exp) {
-            throw new ExpiredException('Expired Token');
+            $ex = new ExpiredException('Expired token');
+            $ex->setPayload($payload);
+            throw $ex;
         }
 
         return $payload;
@@ -197,12 +203,13 @@ class JWT
         string $keyId = null,
         array $head = null
     ): string {
-        $header = ['typ' => 'JWT', 'alg' => $alg];
+        $header = ['typ' => 'JWT'];
+        if (isset($head) && \is_array($head)) {
+            $header = \array_merge($header, $head);
+        }
+        $header['alg'] = $alg;
         if ($keyId !== null) {
             $header['kid'] = $keyId;
-        }
-        if (isset($head) && \is_array($head)) {
-            $header = \array_merge($head, $header);
         }
         $segments = [];
         $segments[] = static::urlsafeB64Encode((string) static::jsonEncode($header));
@@ -516,8 +523,8 @@ class JWT
         ];
         throw new DomainException(
             isset($messages[$errno])
-                ? $messages[$errno]
-                : 'Unknown JSON error: ' . $errno
+            ? $messages[$errno]
+            : 'Unknown JSON error: ' . $errno
         );
     }
 
@@ -564,7 +571,7 @@ class JWT
         return self::encodeDER(
             self::ASN1_SEQUENCE,
             self::encodeDER(self::ASN1_INTEGER, $r) .
-                self::encodeDER(self::ASN1_INTEGER, $s)
+            self::encodeDER(self::ASN1_INTEGER, $s)
         );
     }
 
